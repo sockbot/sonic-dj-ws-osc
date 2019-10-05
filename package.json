@@ -1,0 +1,16 @@
+{
+  "name": "sonic-dj-ws-osc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "osc-js": "^2.0.4",
+    "ws": "^7.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
