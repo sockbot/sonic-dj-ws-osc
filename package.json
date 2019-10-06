@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js"
+    "start": "node ws-server.js"
   },
   "author": "",
   "license": "ISC"
