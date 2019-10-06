@@ -27,11 +27,13 @@ const playLoop = options => {
   osc.send(message);
 };
 
+const playPhrase = options => {};
+
 osc.on("/beat", message => {
   const [beat, bar, phrase] = message.args;
   const loop = { control: "/1/push11", value: 1 };
   if (beat === 0) {
-    playLoop(loop);
+    // playLoop(loop);
     console.log("beat === 0");
   }
   console.log(message);
