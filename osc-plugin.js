@@ -28,11 +28,17 @@ const playLoop = options => {
 };
 
 osc.on("/beat", message => {
-  console.log(message.args);
+  const [beat, bar, phrase] = message.args;
+  const loop = { control: "/1/push11", value: 1 };
+  if (beat === 0) {
+    playLoop(loop);
+    console.log("beat === 0");
+  }
+  console.log(message);
 });
 
 osc.open();
 
 // playLoop({ control: "/1/push1", value: 1 });
 
-module.exports = { playPhrase, playLoop };
+module.exports = { playLoop };
