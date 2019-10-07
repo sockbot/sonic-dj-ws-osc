@@ -21,43 +21,52 @@ const osc = new OSC({
 });
 
 const buttons = {
-  1: "/1/push1",
-  2: "/1/push2",
-  3: "/1/push3",
-  4: "//push4",
-  5: "/1/push5",
-  6: "/1/push6",
-  7: "/1/push7",
-  8: "/1/push8",
-  9: "/1/push9",
-  10: "/1/push10",
-  11: "/1/push11",
-  12: "/1/push12",
-  13: "/1/push13",
+  1: "/1/push1", // beep_lead
+  2: "/1/push2", // silly_lead
+  3: "/1/push3", // flanged_lead
+  4: "/1/push4", // industrial_lead
+  5: "/1/push5", // electro_lead
+  6: "/1/push6", // simple_bass
+  7: "/1/push7", // echo_bass
+  8: "/1/push8", // dub_bass
+  9: "/1/push9", // distort_bass
+  10: "/1/push10", // groovy_bass
+  11: "/1/push11", // amen_drum
+  12: "/1/push12", // basic_drum
+  13: "/1/push13", // shoryuken
   14: "/1/push14",
   15: "/1/push15",
   16: "/1/push16"
 };
 
-const stagedPhrase = {
+const loops = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+
+const samples = [0, 0, 0, 0];
+
+let stage = {
   lead: null,
   bass: null,
   drum: null,
   rise: null
 };
 
+const setStage = instruments => {
+  stage = { ...instruments };
+};
+
 const playLoop = loopNum => {
-  console.log("PLAYING ", buttons[loopNum]);
+  console.log(`PLAYING LOOP ${loopNum}`, buttons[loopNum]);
   const message = new OSC.Message(buttons[loopNum], 1);
   osc.send(message);
 };
 
-const playPhrase = loopNums => {
-  const { lead, bass, drum, rise } = loopNums;
-  playLoop(lead);
-  playLoop(bass);
-  playLoop(drum);
-  playLoop(rise);
+const playPhrase = instruments => {
+  console.log("PLAY PHRASE:", instruments);
+  for (const instrument in instruments) {
+    if (instruments[instrument] !== null) {
+      playLoop(instruments[instrument]);
+    }
+  }
 };
 
 osc.on("/beat", message => {
@@ -69,10 +78,11 @@ osc.on("/bar", message => {
 });
 
 osc.on("/phrase", message => {
-  // playPhrase(stagedPhrase);
+  playPhrase(stage);
   console.log("phrase", message.args);
+  setStage({});
 });
 
 osc.open();
 
-module.exports = { playLoop };
+module.exports = { stage, setStage };
