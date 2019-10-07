@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "express": "^4.17.1",
     "osc-js": "^2.0.4",
+    "socket.io": "^2.3.0",
     "ws": "^7.1.2"
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node ws-server.js"
+    "start": "node server.js",
+    "sonic-pi-start": "sonic-pi-tool eval-file oscController.rb",
+    "sonic-pi-stop": "sonic-pi-tool stop"
   },
   "author": "",
   "license": "ISC"
