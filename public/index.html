@@ -15,7 +15,12 @@
 
       document.getElementById("play").addEventListener("click", play);
       function play(btnNum) {
-        socket.emit("btnPressed", 1);
+        socket.emit("btnPressed", {
+          lead: 1,
+          bass: 9,
+          drum: 11,
+          rise: null
+        });
       }
     </script>
   </body>

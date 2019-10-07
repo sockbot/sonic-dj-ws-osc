@@ -43,23 +43,28 @@ const loops = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
 const samples = [0, 0, 0, 0];
 
-const stagedPhrase = {
-  lead: 1,
-  bass: 9,
-  drum: 11,
+let stage = {
+  lead: null,
+  bass: null,
+  drum: null,
   rise: null
 };
 
+const setStage = instruments => {
+  stage = { ...instruments };
+};
+
 const playLoop = loopNum => {
-  console.log("PLAYING ", buttons[loopNum]);
+  console.log(`PLAYING LOOP ${loopNum}`, buttons[loopNum]);
   const message = new OSC.Message(buttons[loopNum], 1);
   osc.send(message);
 };
 
 const playPhrase = instruments => {
+  console.log("PLAY PHRASE:", instruments);
   for (const instrument in instruments) {
-    if (instrument !== null) {
-      playLoop(instrument);
+    if (instruments[instrument] !== null) {
+      playLoop(instruments[instrument]);
     }
   }
 };
@@ -73,10 +78,11 @@ osc.on("/bar", message => {
 });
 
 osc.on("/phrase", message => {
-  playPhrase(stagedPhrase);
+  playPhrase(stage);
   console.log("phrase", message.args);
+  setStage({});
 });
 
 osc.open();
 
-module.exports = { playLoop };
+module.exports = { stage, setStage };

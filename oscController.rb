@@ -385,5 +385,5 @@ live_loop :metro do #metronome to sync stuff together
     osc "/phrase", beat_counter, bar_counter, phrase_counter
   end
   beat_counter += 1
-  sleep 1
+  sleep 0.5
 end

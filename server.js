@@ -11,7 +11,7 @@ io.on("connection", function(socket) {
   console.log("a user connected");
   socket.on("btnPressed", function(msg) {
     console.log("message: " + msg);
-    osc.playLoop(13);
+    osc.setStage(msg);
   });
 });
 
