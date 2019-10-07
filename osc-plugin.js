@@ -30,6 +30,7 @@ const playLoop = options => {
 
 const playPhrase = options => {};
 
+console.log("WSS SERVER:", wssServer);
 osc.on("/beat", message => {
   // const [beat, bar, phrase] = message.args;
   // const loop = { control: "/1/push11", value: 1 };
@@ -37,6 +38,9 @@ osc.on("/beat", message => {
   //   // playLoop(loop);
   //   console.log("beat === 0");
   // }
+  // wssServer.wss.on("connection", socket => {
+  //   socket.send("beat", message.args);
+  // });
   console.log("beat", message.args);
 });
 
