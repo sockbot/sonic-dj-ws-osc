@@ -55,6 +55,7 @@ osc.on("/phrase", message => {
 
 osc.on("/test/random", message => {
   console.log("Random:", message);
+  osc.send(new OSC.Message("/test", 12345)); // this sends binary data to a ws client
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

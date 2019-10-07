@@ -1,4 +1,6 @@
 <button id="send">Send Message</button>
+<ul id="messages"></ul>
+
 <script type="text/javascript" src="osc.min.js"></script>
 <script type="text/javascript">
   var osc = new OSC();
@@ -7,5 +9,9 @@
   document.getElementById("send").addEventListener("click", () => {
     var message = new OSC.Message("/test/random", Math.random());
     osc.send(message);
+  });
+
+  osc.on("*", message => {
+    $("#messages").append(`<li>${message}</li>`);
   });
 </script>
