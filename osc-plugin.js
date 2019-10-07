@@ -80,7 +80,7 @@ osc.on("/bar", message => {
 osc.on("/phrase", message => {
   playPhrase(stage);
   console.log("phrase", message.args);
-  setStage({});
+  setStage({ lead: null, bass: null, drum: null, rise: null });
 });
 
 osc.open();
