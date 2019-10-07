@@ -9,7 +9,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node ws-server.js"
+    "start": "node ws-server.js",
+    "sonic-pi-start": "sonic-pi-tool eval-file oscController.rb",
+    "sonic-pi-stop": "sonic-pi-tool stop"
   },
   "author": "",
   "license": "ISC"

@@ -2,6 +2,7 @@ const SONIC_PI_PORT = 4559;
 const SONIC_PI_HOST = "localhost";
 
 const OSC = require("osc-js");
+const wssServer = require("./ws-server");
 
 const config = {
   send: {
@@ -30,17 +31,25 @@ const playLoop = options => {
 const playPhrase = options => {};
 
 osc.on("/beat", message => {
-  const [beat, bar, phrase] = message.args;
-  const loop = { control: "/1/push11", value: 1 };
-  if (beat === 0) {
-    // playLoop(loop);
-    console.log("beat === 0");
-  }
-  console.log(message);
+  // const [beat, bar, phrase] = message.args;
+  // const loop = { control: "/1/push11", value: 1 };
+  // if (beat === 0) {
+  //   // playLoop(loop);
+  //   console.log("beat === 0");
+  // }
+  console.log("beat", message.args);
+});
+
+osc.on("/bar", message => {
+  console.log("bar", message.args);
+});
+
+osc.on("/phrase", message => {
+  console.log("phrase", message.args);
 });
 
 osc.open();
 
 // playLoop({ control: "/1/push1", value: 1 });
 
-module.exports = { playLoop };
+module.exports = { osc, playLoop };
