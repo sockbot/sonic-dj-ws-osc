@@ -13,6 +13,7 @@ io.on("connection", function(socket) {
     console.log("message: " + msg);
     osc.setStage(msg);
   });
+  osc.grabSocket(socket);
 });
 
 http.listen(8000, function() {
