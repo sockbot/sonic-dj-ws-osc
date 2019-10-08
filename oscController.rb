@@ -109,7 +109,7 @@ define :dub_bass do
 end
 
 define :distort_bass do
-  with_fx :distortion do
+  # with_fx :distortion do
     2.times do
       8.times do
         sample :bass_dnb_f, pitch: 0, finish: 0.6
@@ -120,7 +120,7 @@ define :distort_bass do
         sleep 1
       end
     end
-  end
+  # end
 end
 
 define :groovy_bass do
@@ -275,7 +275,7 @@ define :doLoop do |n,vol,sampleName,bs,|
     end
   end
   live_loop  ln, sync: :metro do
-    s=sample sampleName,beat_stretch: bs,amp: vol
+    s=play sampleName,beat_stretch: bs,amp: vol
     set ("s"+n.to_s).to_sym,s
     k=(bs/0.1).to_i
     k.times do
