@@ -11,18 +11,7 @@
 
 use_real_time
 use_bpm 100
-path="~/lighthouse/sonic-dj/samples/"
-
-define :beep_lead do
-  8.times do
-    with_fx :reverb, room: 0.9 do
-      with_fx :slicer, phase: 1, wave: 1, mix: 1.0 do
-        synth :hoover, note: [:Db4, :G3, :Bb3, :F4].ring.tick, attack: 2, release: 2, amp: 0.5
-        sleep 4
-      end
-    end
-  end
-end
+path="~/lighthouse/sonic-dj-ws-osc/samples/"
 
 define :silly_lead do
   use_synth :dsaw
@@ -36,34 +25,10 @@ define :silly_lead do
 end
 
 define :flanged_lead do
-  # with_fx :flanger do
+  with_fx :flanger do
     2.times do
       sample :loop_garzul, amp: 0.5, beat_stretch: 16
       sleep 16
-    end
-  # end
-end
-
-define :industrial_lead do
-  2.times do
-    4.times do
-      sample :loop_industrial, beat_stretch: 2, amp: 1
-      sleep 2
-    end
-    4.times do
-      sample :loop_industrial, beat_stretch: 2, amp: 1
-      sample :elec_lo_snare
-      sleep 0.5
-      sample :elec_blip
-      sleep 0.5
-      sample :elec_blip
-      sleep 0.25
-      sample :elec_blip
-      sleep 0.25
-      sample :elec_blip
-      sleep 0.25
-      sample :elec_blip
-      sleep 0.25
     end
   end
 end
@@ -81,10 +46,14 @@ define :electro_lead do
   end
 end
 
-define :simple_bass do
-  64.times do
-    sample :bd_haus
-    sleep 0.5
+define :dub_bass do
+  with_fx :slicer, phase: [0.25, 0.5].choose, invert_wave: 1, wave: 0 do
+    8.times do
+      bass_line = (knit :e1, 3, [:c1, :c2].choose, 1)
+      s = synth :square, note: bass_line.tick, sustain: 4, cutoff: 60
+      control s, cutoff_slide: 4, cutoff: 120
+      sleep 4
+    end
   end
 end
 
@@ -97,33 +66,14 @@ define :echo_bass do
   end
 end
 
-define :dub_bass do
-  with_fx :slicer, phase: [0.25, 0.5].choose, invert_wave: 1, wave: 0 do
-    8.times do
-      bass_line = (knit :e1, 3, [:c1, :c2].choose, 1)
-      s = synth :square, note: bass_line.tick, sustain: 4, cutoff: 60
-      control s, cutoff_slide: 4, cutoff: 120
-      sleep 4
-    end
+define :simple_bass do
+  64.times do
+    sample :bd_haus
+    sleep 0.5
   end
 end
 
-define :distort_bass do
-  with_fx :distortion do
-    2.times do
-      8.times do
-        sample :bass_dnb_f, pitch: 0, finish: 0.6
-        sleep 1
-      end
-      8.times do
-        sample :bass_dnb_f, pitch: 1, finish: 0.6
-        sleep 1
-      end
-    end
-  end
-end
-
-define :groovy_bass do
+define :groovy_drum do
   8.times do
     sample :loop_breakbeat, beat_stretch: 4, amp: 3
     sleep 4
@@ -166,7 +116,14 @@ define :basic_drum do
   end
 end
 
+define :snare_rise do
+end
 
+define :second_rise do
+end
+
+define :third_rise do
+end
 
 use_debug false
 use_osc_logging false
@@ -205,23 +162,23 @@ define :doCommandSelect do |n|
   when 1
     #parameters: channel,vol,samplename,beatstrech value
     in_thread do
-      doLoop 1, 1, beep_lead, 1
+      doLoop 1, 1, silly_lead, 1
     end
   when 2
     in_thread do
-      doLoop 2, 1, silly_lead, 1
+      doLoop 2, 1, flanged_lead, 1
     end
   when 3
     in_thread do
-      doLoop 3, 1, flanged_lead, 1
+      doLoop 3, 1, electro_lead, 1
     end
   when 4
     in_thread do
-      doLoop 4, 1, industrial_lead, 1
+      doLoop 4, 1, dub_bass, 1
     end
   when 5
     in_thread do
-      doLoop 5, 1, electro_lead, 1
+      doLoop 5, 1, echo_bass, 1
     end
   when 6
     in_thread do
@@ -229,30 +186,39 @@ define :doCommandSelect do |n|
     end
   when 7
     in_thread do
-      doLoop 7, 1, echo_bass, 1
+      doLoop 7, 1, groovy_drum, 1
     end
   when 8
     in_thread do
-      doLoop 8, 1, dub_bass, 1
+      doLoop 8, 1, amen_drum, 1
     end
   when 9
     in_thread do
-      doLoop 9, 1, distort_bass, 1
+      doLoop 9, 1, basic_drum, 1
     end
   when 10
     in_thread do
-      doLoop 10, 1, groovy_bass, 1
+      doLoop 10, 1, snare_rise, 1
     end
   when 11
     in_thread do
-      doLoop 11, 1, amen_drum, 1
+      doLoop 11, 1, second_rise, 1
     end
   when 12
     in_thread do
-      doLoop 12, 1, basic_drum, 1
+      doLoop 12, 1, third_rise, 1
     end
   when 13
     doOneShot 13,4,path+"shoryuken.wav" #parameters channel,vol,sample
+    #as a singleShot plays once so only sync the start
+  when 14
+    doOneShot 14,4,path+"airhorn.wav" #parameters channel,vol,sample
+    #as a singleShot plays once so only sync the start
+  when 15
+    doOneShot 15,4,path+"siren.wav" #parameters channel,vol,sample
+    #as a singleShot plays once so only sync the start  
+  when 16
+    doOneShot 16,4,path+"laser.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start
   else
     puts "nothing"
@@ -287,7 +253,7 @@ end
 
 #general function to start stoppable single shot sample
 define :doOneShot do |n,vol,sampleName,bs=0|
-  sync :metro
+  # sync :metro
   if bs >0
     s=sample sampleName,beat_stretch: bs,amp: vol
   else
