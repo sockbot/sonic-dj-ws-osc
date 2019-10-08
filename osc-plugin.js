@@ -21,30 +21,25 @@ const osc = new OSC({
 });
 
 const buttons = {
-  beep_lead: "/1/push1", // beep_lead
-  2: "/1/push2", // silly_lead
-  3: "/1/push3", // flanged_lead
-  4: "/1/push4", // industrial_lead
-  5: "/1/push5", // electro_lead
-  6: "/1/push6", // simple_bass
-  7: "/1/push7", // echo_bass
-  8: "/1/push8", // dub_bass
-  distort_bass: "/1/push9", // distort_bass
-  10: "/1/push10", // groovy_bass
-  amen_drum: "/1/push11", // amen_drum
-  12: "/1/push12", // basic_drum
-  13: "/1/push13", // shoryuken
-  14: "/1/push14",
-  15: "/1/push15",
-  16: "/1/push16"
+  silly_lead: "/1/push1",
+  flanged_lead: "/1/push2",
+  electro_lead: "/1/push3",
+  dub_bass: "/1/push4",
+  echo_bass: "/1/push5",
+  simple_bass: "/1/push6",
+  groovy_drum: "/1/push7",
+  amen_drum: "/1/push8",
+  basic_drum: "/1/push9",
+  sanre_rise: "/1/push10",
+  second_rise: "/1/push11",
+  third_rise: "/1/push12",
+  shoryuken_sample: "/1/push13",
+  airhorn_sample: "/1/push14",
+  siren_sample: "/1/push15",
+  laser_sample: "/1/push16"
 };
 
-let stage = {
-  lead: null,
-  bass: null,
-  drum: null,
-  rise: null
-};
+let stage = {};
 
 let socket = null;
 
@@ -55,21 +50,35 @@ const grabSocket = sock => {
   return socket;
 };
 
+const clearStage = () => {
+  stage = {
+    loops: {
+      lead: null,
+      bass: null,
+      drum: null,
+      rise: null
+    },
+    sample: null
+  };
+};
+clearStage();
+
 const setStage = instruments => {
   stage = { ...instruments };
 };
 
-const playLoop = loopNum => {
-  console.log(`PLAYING LOOP ${loopNum} ` + buttons[loopNum]);
-  const message = new OSC.Message(buttons[loopNum], 1);
+const playLoop = loopKey => {
+  console.log(`PLAYING LOOP ${loopKey} ` + buttons[loopKey]);
+  const message = new OSC.Message(buttons[loopKey], 1);
   osc.send(message);
 };
 
 const playPhrase = instruments => {
-  console.log("PLAY PHRASE:", instruments);
-  for (const instrument in instruments) {
-    if (instruments[instrument] !== null) {
-      playLoop(instruments[instrument]);
+  const loops = instruments.loops;
+  console.log("PLAY PHRASE:", loops);
+  for (const loop in loops) {
+    if (loops[loop] !== null) {
+      playLoop(loops[loop]);
     }
   }
 };
@@ -80,16 +89,20 @@ osc.on("/beat", message => {
 
 osc.on("/bar", message => {
   console.log("bar", message.args);
-  grabSocket().emit("bar", message.args[1]);
+  if (grabSocket()) {
+    grabSocket().emit("bar", message.args[1]);
+  }
 });
 
 osc.on("/phrase", message => {
-  grabSocket().emit("phrase", message.args[2]);
-  playPhrase(stage);
-  setStage({});
+  if (grabSocket()) {
+    grabSocket().emit("phrase", message.args[2]);
+  }
   console.log("phrase", message.args);
+  playPhrase(stage);
+  clearStage();
 });
 
 osc.open();
 
-module.exports = { grabSocket, stage, setStage };
+module.exports = { grabSocket, setStage, playLoop };

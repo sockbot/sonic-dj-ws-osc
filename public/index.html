@@ -16,10 +16,13 @@
       document.getElementById("play").addEventListener("click", play);
       function play(btnNum) {
         socket.emit("btnPressed", {
-          lead: "beep_lead",
-          bass: "distort_bass",
-          drum: "amen_drum",
-          rise: null
+          loops: {
+            lead: "electro_lead",
+            bass: "dub_bass",
+            drum: "amen_drum",
+            rise: null
+          },
+          sample: "shoruyken_sample"
         });
       }
     </script>
