@@ -73,6 +73,14 @@ const playLoop = loopKey => {
   osc.send(message);
 };
 
+const playSample = djState => {
+  const sampleKey = djState.sample;
+  console.log(`PLAYING SAMPLE ${sampleKey}`);
+  console.log(buttons[sampleKey]);
+  const message = new OSC.Message(buttons[sampleKey], 1);
+  osc.send(message);
+};
+
 const playPhrase = instruments => {
   const loops = instruments.loops;
   console.log("PLAY PHRASE:", loops);
@@ -105,4 +113,4 @@ osc.on("/phrase", message => {
 
 osc.open();
 
-module.exports = { grabSocket, setStage, playLoop };
+module.exports = { grabSocket, setStage, playSample };

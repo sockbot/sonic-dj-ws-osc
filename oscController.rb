@@ -211,15 +211,12 @@ define :doCommandSelect do |n|
   when 13
     doOneShot 13,4,path+"shoryuken.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start
-  else
   when 14
     doOneShot 14,4,path+"airhorn.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start
-  else
   when 15
     doOneShot 15,4,path+"siren.wav" #parameters channel,vol,sample
-    #as a singleShot plays once so only sync the start
-  else
+    #as a singleShot plays once so only sync the start  
   when 16
     doOneShot 16,4,path+"laser.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start
@@ -256,7 +253,7 @@ end
 
 #general function to start stoppable single shot sample
 define :doOneShot do |n,vol,sampleName,bs=0|
-  sync :metro
+  # sync :metro
   if bs >0
     s=sample sampleName,beat_stretch: bs,amp: vol
   else

@@ -10,20 +10,36 @@
   </head>
   <body>
     <button id="play">Play</button>
+    <button id="sample">Sample</button>
     <script>
       var socket = io();
 
       document.getElementById("play").addEventListener("click", play);
       function play(btnNum) {
-        socket.emit("btnPressed", {
+        const exampleObj = {
           loops: {
             lead: "electro_lead",
             bass: "dub_bass",
             drum: "amen_drum",
             rise: null
           },
-          sample: "shoruyken_sample"
-        });
+          sample: "shoryuken_sample"
+        };
+        socket.emit("btnPressed", exampleObj);
+      }
+
+      document.getElementById("sample").addEventListener("click", playSample);
+      function playSample(btnNum) {
+        const exampleObj = {
+          loops: {
+            lead: "electro_lead",
+            bass: "dub_bass",
+            drum: "amen_drum",
+            rise: null
+          },
+          sample: "shoryuken_sample"
+        };
+        socket.emit("samplePressed", exampleObj);
       }
     </script>
   </body>
