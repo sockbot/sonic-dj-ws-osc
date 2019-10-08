@@ -36,12 +36,12 @@ define :silly_lead do
 end
 
 define :flanged_lead do
-  with_fx :flanger do
+  # with_fx :flanger do
     2.times do
       sample :loop_garzul, amp: 0.5, beat_stretch: 16
       sleep 16
     end
-  end
+  # end
 end
 
 define :industrial_lead do
@@ -109,7 +109,7 @@ define :dub_bass do
 end
 
 define :distort_bass do
-  # with_fx :distortion do
+  with_fx :distortion do
     2.times do
       8.times do
         sample :bass_dnb_f, pitch: 0, finish: 0.6
@@ -120,7 +120,7 @@ define :distort_bass do
         sleep 1
       end
     end
-  # end
+  end
 end
 
 define :groovy_bass do
@@ -274,7 +274,7 @@ define :doLoop do |n,vol,sampleName,bs,|
       sleep 0.1
     end
   end
-  live_loop  ln, sync: :metro do
+  1.times  ln, sync: :metro do
     s=play sampleName,beat_stretch: bs,amp: vol
     set ("s"+n.to_s).to_sym,s
     k=(bs/0.1).to_i
@@ -377,7 +377,7 @@ live_loop :metro do #metronome to sync stuff together
     bar_counter = 0
     beat_counter = 0
   end
-  osc "/beat", beat_counter, bar_counter, phrase_counter
+  # osc "/beat", beat_counter, bar_counter, phrase_counter
   if bar_counter != current_bar then
     osc "/bar", beat_counter, bar_counter, phrase_counter
   end
