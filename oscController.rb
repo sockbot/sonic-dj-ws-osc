@@ -220,9 +220,6 @@ define :doCommandSelect do |n|
   when 16
     doOneShot 16,4,path+"photontorpedo.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start
-  when 17
-    1.times do
-    end
   else
     puts "nothing"
   end
@@ -243,7 +240,7 @@ define :doLoop do |n,vol,sampleName,bs,|
       sleep 0.1
     end
   end
-  1.times  ln, sync: :metro do
+  play ln, sync: :metro do
     s=play sampleName,beat_stretch: bs,amp: vol
     set ("s"+n.to_s).to_sym,s
     k=(bs/0.1).to_i
