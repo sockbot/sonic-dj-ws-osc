@@ -10,11 +10,11 @@ app.get("/", function(req, res) {
 io.on("connection", function(socket) {
   console.log("a user connected");
   socket.on("btnPressed", function(msg) {
-    console.log("message: " + msg);
+    console.log("message: ", msg);
     osc.setStage(msg);
   });
   socket.on("samplePressed", function(msg) {
-    console.log("message: " + msg);
+    console.log("message: ", msg);
     osc.playSample(msg);
   });
   osc.grabSocket(socket);

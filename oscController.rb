@@ -218,8 +218,11 @@ define :doCommandSelect do |n|
     doOneShot 15,4,path+"siren.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start  
   when 16
-    doOneShot 16,4,path+"laser.wav" #parameters channel,vol,sample
+    doOneShot 16,4,path+"photontorpedo.wav" #parameters channel,vol,sample
     #as a singleShot plays once so only sync the start
+  when 17
+    1.times do
+    end
   else
     puts "nothing"
   end
