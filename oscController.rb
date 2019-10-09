@@ -10,7 +10,7 @@
 #Can be modified to use any suitable OSC source thant can give on/off signals when a button is pressed
 
 use_real_time
-use_bpm 100
+use_bpm 160
 path="~/lighthouse/sonic-dj-ws-osc/samples/"
 
 define :silly_lead do
@@ -117,6 +117,34 @@ define :basic_drum do
 end
 
 define :snare_rise do
+  4.times do
+    sample :sn_dub
+    sleep 2
+  end
+  
+  4.times do
+    sample :sn_dub
+    sleep 1
+    sample :sn_dub
+    sleep 0.5
+    sample :sn_dub
+    sleep 0.5
+  end
+  
+  16.times do
+    sample :sn_dub
+    sleep 0.5
+  end
+  
+  16.times do
+    sample :sn_dub
+    sleep 0.25
+  end
+  
+  32.times do
+    sample :sn_dub
+    sleep 0.125
+  end
 end
 
 define :second_rise do
@@ -324,7 +352,7 @@ define :doLoopSequence do |n,vol,synth|
 end
 
 beat_counter = 0 # 4 beats per bar
-bar_counter = 0 # 8 bars per phrase
+bar_counter = 0 # 8 bars per phrase, except 9 for phrase[3]
 phrase_counter = 0 # 6 phrases per song
 
 live_loop :metro do #metronome to sync stuff together
@@ -334,7 +362,10 @@ live_loop :metro do #metronome to sync stuff together
     beat_counter = 0
     bar_counter += 1
   end
-  if !bar_counter.zero? && bar_counter % 8 == 0 then
+  if !bar_counter.zero? && bar_counter % 8 == 0 && phrase_counter != 3 then
+    bar_counter = 0
+    phrase_counter += 1
+  elsif !bar_counter.zero? && bar_counter % 9 == 0 && phrase_counter == 3 then
     bar_counter = 0
     phrase_counter += 1
   end

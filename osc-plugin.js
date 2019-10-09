@@ -30,7 +30,7 @@ const buttons = {
   groovy_drum: "/1/push7",
   amen_drum: "/1/push8",
   basic_drum: "/1/push9",
-  sanre_rise: "/1/push10",
+  snare_rise: "/1/push10",
   second_rise: "/1/push11",
   third_rise: "/1/push12",
   shoryuken_sample: "/1/push13",
