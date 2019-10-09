@@ -31,13 +31,7 @@
       document.getElementById("sample").addEventListener("click", playSample);
       function playSample(btnNum) {
         const exampleObj = {
-          loops: {
-            lead: "electro_lead",
-            bass: "dub_bass",
-            drum: "amen_drum",
-            rise: null
-          },
-          sample: "shoryuken_sample"
+          sample: "photontorpedo_sample"
         };
         socket.emit("samplePressed", exampleObj);
       }

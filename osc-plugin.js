@@ -36,7 +36,7 @@ const buttons = {
   shoryuken_sample: "/1/push13",
   airhorn_sample: "/1/push14",
   siren_sample: "/1/push15",
-  laser_sample: "/1/push16"
+  photontorpedo_sample: "/1/push16"
 };
 
 let stage = {};
