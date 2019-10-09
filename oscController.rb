@@ -230,11 +230,11 @@ define :doCommandSelect do |n|
     end
   when 11
     in_thread do
-      doLoop 11, 1, second_rise, 1
+      doLoop 11, 1, snare_rise, 1
     end
   when 12
     in_thread do
-      doLoop 12, 1, third_rise, 1
+      doLoop 12, 1, snare_rise, 1
     end
   when 13
     doOneShot 13,4,path+"shoryuken.wav" #parameters channel,vol,sample
@@ -351,9 +351,9 @@ define :doLoopSequence do |n,vol,synth|
   end
 end
 
-beat_counter = 0 # 4 beats per bar
-bar_counter = 0 # 8 bars per phrase, except 9 for phrase[3]
-phrase_counter = 0 # 6 phrases per song
+beat_counter = 3 # 4 beats per bar
+bar_counter = 7 # 8 bars per phrase, except 9 for phrase[3]
+phrase_counter = 5 # 6 phrases per song
 
 live_loop :metro do #metronome to sync stuff together
   current_bar = bar_counter

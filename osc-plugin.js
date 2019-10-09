@@ -39,7 +39,15 @@ const buttons = {
   photontorpedo_sample: "/1/push16"
 };
 
-let stage = {};
+let stage = {
+  loops: {
+    lead: "silly_lead",
+    bass: null,
+    drum: null,
+    rise: null
+  },
+  sample: null
+};
 
 let socket = null;
 
@@ -61,7 +69,6 @@ const clearStage = () => {
     sample: null
   };
 };
-clearStage();
 
 const setStage = instruments => {
   stage = { ...instruments };
