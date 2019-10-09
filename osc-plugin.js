@@ -41,7 +41,7 @@ const buttons = {
 
 let stage = {
   loops: {
-    lead: "silly_lead",
+    lead: null,
     bass: null,
     drum: null,
     rise: null
