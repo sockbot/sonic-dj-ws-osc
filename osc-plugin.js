@@ -30,7 +30,7 @@ const buttons = {
   groovy_drum: "/1/push7",
   amen_drum: "/1/push8",
   basic_drum: "/1/push9",
-  sanre_rise: "/1/push10",
+  snare_rise: "/1/push10",
   second_rise: "/1/push11",
   third_rise: "/1/push12",
   shoryuken_sample: "/1/push13",
@@ -39,7 +39,15 @@ const buttons = {
   photontorpedo_sample: "/1/push16"
 };
 
-let stage = {};
+let stage = {
+  loops: {
+    lead: "silly_lead",
+    bass: null,
+    drum: null,
+    rise: null
+  },
+  sample: null
+};
 
 let socket = null;
 
@@ -61,7 +69,6 @@ const clearStage = () => {
     sample: null
   };
 };
-clearStage();
 
 const setStage = instruments => {
   stage = { ...instruments };
@@ -77,8 +84,8 @@ const playSample = djState => {
   const sampleKey = djState.sample;
   console.log(`PLAYING SAMPLE ${sampleKey}`);
   console.log(buttons[sampleKey]);
-  const message = new OSC.Message(buttons[sampleKey], 1);
-  osc.send(message);
+  const play = new OSC.Message(buttons[sampleKey], 1);
+  osc.send(play);
 };
 
 const playPhrase = instruments => {
@@ -96,9 +103,10 @@ osc.on("/beat", message => {
 });
 
 osc.on("/bar", message => {
+  const barNum = message.args[1];
   console.log("bar", message.args);
   if (grabSocket()) {
-    grabSocket().emit("bar", message.args[1]);
+    grabSocket().emit("bar", barNum);
   }
 });
 
@@ -108,7 +116,6 @@ osc.on("/phrase", message => {
   }
   console.log("phrase", message.args);
   playPhrase(stage);
-  clearStage();
 });
 
 osc.open();
