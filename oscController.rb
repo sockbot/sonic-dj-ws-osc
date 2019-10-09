@@ -136,14 +136,9 @@ define :snare_rise do
     sleep 0.5
   end
   
-  16.times do
-    sample :sn_dub
-    sleep 0.25
-  end
-  
   32.times do
     sample :sn_dub
-    sleep 0.125
+    sleep 0.25
   end
 end
 
