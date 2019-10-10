@@ -67,9 +67,10 @@ define :echo_bass do
 end
 
 define :simple_bass do
-  64.times do
-    sample :bd_haus
-    sleep 0.5
+  use_synth :blade
+  32.times do
+    play :e1, amp: 2, attack: 0, decay: 0, sustain: 0, release: 0.5
+    sleep 1
   end
 end
 
